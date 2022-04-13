@@ -14,15 +14,15 @@
         <tbody>
           <tr scope="row">
             <td class="col-2"><strong>Gefahrene Strecke</strong></td>
-            <td class="col">4023km <span style="font-size: smaller">(letzte Aktualisierung: 13.04.2022)</span></td>
+            <td class="col"><span id="value1">0</span>km <span style="font-size: smaller">(letzte Aktualisierung: 13.04.2022)</span></td>
           </tr>
           <tr scope="row">
             <td class="col-2"><strong>Spender*innen</strong></td>
-            <td class="col">5</td>
+            <td class="col"><span id="value2">0</span></td>
           </tr>
           <tr scope="row">
             <td class="col-2"><strong>Gesammelte Spenden</strong></td>
-            <td class="col">132€</td>
+            <td class="col"><span id="value3">0</span>€</td>
           </tr>
         </tbody>
       </table>
@@ -36,6 +36,43 @@
 	  var Fullscreenbutton = true;
       var Tcols = "#ff0000,#00ff00"
     </script>
+    <script>
+      function animateValue(id, start, end, duration) {
+          // assumes integer values for start and end
+
+          var obj = document.getElementById(id);
+          var range = end - start;
+          // no timer shorter than 50ms (not really visible any way)
+          var minTimer = 50;
+          // calc step time to show all interediate values
+          var stepTime = Math.abs(Math.floor(duration / range));
+
+          // never go below minTimer
+          stepTime = Math.max(stepTime, minTimer);
+
+          // get current time and calculate desired end time
+          var startTime = new Date().getTime();
+          var endTime = startTime + duration;
+          var timer;
+
+          function run() {
+              var now = new Date().getTime();
+              var remaining = Math.max((endTime - now) / duration, 0);
+              var value = Math.round(end - (remaining * range));
+              obj.innerHTML = value;
+              if (value == end) {
+                  clearInterval(timer);
+              }
+          }
+
+          timer = setInterval(run, stepTime);
+          run();
+      }
+
+      animateValue("value1", 0, 4023, 7000);
+      animateValue("value2", 0, 5, 7000);
+      animateValue("value3", 0, 130, 7000);
+    </script>
     <script src="GM_Utils/GPX2GM.js"></script>
-</body>
+  </body>
 </html>
