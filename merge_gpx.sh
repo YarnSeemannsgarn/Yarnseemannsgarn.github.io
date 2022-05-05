@@ -6,6 +6,6 @@ rm -f $ff_all
 ff=""
 for f in *.gpx
 do 
-    ff="$ff -f $f -x simplify,count=500"
+    ff="$ff -f $f -x simplify,count=700"
 done
 gpsbabel -i gpx $ff -o gpx -F "$ff_all"
